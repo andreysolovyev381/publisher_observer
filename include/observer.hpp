@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include "../requirements/hash.h"
-#include "../requirements/comparator.h"
-#include "../requirements/ctor_input.h"
-#include "../requirements/container.h"
+#include "requirements/hash.h"
+#include "requirements/comparator.h"
+#include "requirements/ctor_input.h"
+#include "requirements/container.h"
 
 #include <boost/circular_buffer.hpp>
 
