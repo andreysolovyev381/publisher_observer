@@ -190,7 +190,6 @@ if (APPLE)
 endif (APPLE)
 
 set(EXECUTABLE_NAME observer_tests)
-set_architecture()
 
 add_executable(${EXECUTABLE_NAME}
         ./tests/main.cpp
