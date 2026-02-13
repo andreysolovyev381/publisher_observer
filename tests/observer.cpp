@@ -3,18 +3,18 @@
 //
 
 #include <gtest/gtest.h>
-
 #include "include/observer.hpp"
-
 #include <string>
 
 using namespace culib::patterns;
+
 
 namespace test_global_values {
 
 	double testValue{0.0};
 
 }//!namespace test_global_values
+
 
 namespace {
 
@@ -44,7 +44,9 @@ namespace {
     TYPED_TEST_SUITE(BasicsPatternsObserver, event_types);
 
     int const niceValue {10};
+    
 }//!namespace
+
 
 TYPED_TEST(BasicsPatternsObserver, EventNotAvailableAttachNotOk){
 	InheretingObserver<TypeParam> o;
