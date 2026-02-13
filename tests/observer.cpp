@@ -7,9 +7,6 @@
 #include <string>
 
 
-using namespace culib::patterns;
-
-
 namespace test_global_values {
 
 	double testValue{0.0};
@@ -50,7 +47,7 @@ namespace {
 
 TYPED_TEST(BasicsPatternsObserver, EventNotAvailableAttachNotOk){
 	InheretingObserver<TypeParam> o;
-	Publisher<TypeParam, double> p;
+	culib::patterns::Publisher<TypeParam, double> p;
 
 	TypeParam someEvent {};
 
@@ -61,7 +58,7 @@ TYPED_TEST(BasicsPatternsObserver, EventNotAvailableAttachNotOk){
 
 TYPED_TEST(BasicsPatternsObserver, EventAvailableAttachOk) {
 	InheretingObserver<TypeParam> o;
-	Publisher<TypeParam, double> p;
+	culib::patterns::Publisher<TypeParam, double> p;
 
 	TypeParam someEvent {};
 	
@@ -73,7 +70,7 @@ TYPED_TEST(BasicsPatternsObserver, EventAvailableAttachOk) {
 
 TYPED_TEST(BasicsPatternsObserver, UpdateWithNewValueNotOk_NoEvent) {
 	InheretingObserver<TypeParam> o;
-	Publisher<TypeParam, double> p;
+	culib::patterns::Publisher<TypeParam, double> p;
 
 	TypeParam someEvent {};
 
@@ -88,7 +85,7 @@ TYPED_TEST(BasicsPatternsObserver, UpdateWithNewValueNotOk_NoEvent) {
 
 TYPED_TEST(BasicsPatternsObserver, UpdateWithNewValueOk) {
 	InheretingObserver<TypeParam> o;
-	Publisher<TypeParam, double> p;
+	culib::patterns::Publisher<TypeParam, double> p;
 
 	TypeParam someEvent {};
 	p.addEvent(someEvent);
@@ -103,7 +100,7 @@ TYPED_TEST(BasicsPatternsObserver, UpdateWithNewValueOk) {
 
 TYPED_TEST(BasicsPatternsObserver, UnableToAddRepetively) {
     InheretingObserver<TypeParam> o;
-    Publisher<TypeParam, double> p;
+    culib::patterns::Publisher<TypeParam, double> p;
     
     TypeParam someEvent {};
     p.addEvent(someEvent);
@@ -129,7 +126,7 @@ TYPED_TEST(BasicsPatternsObserver, UnableToAddRepetively) {
 
 TYPED_TEST(BasicsPatternsObserver, NiceValues_Add) {
     InheretingObserver<TypeParam> o1, o2;
-    Publisher<TypeParam, double> p;
+    culib::patterns::Publisher<TypeParam, double> p;
     
     TypeParam someEvent {};
     p.addEvent(someEvent);
@@ -149,7 +146,7 @@ TYPED_TEST(BasicsPatternsObserver, NiceValues_Add) {
 
 TYPED_TEST(BasicsPatternsObserver, NiceValues_Remove) {
     InheretingObserver<TypeParam> o1, o2;
-    Publisher<TypeParam, double> p;
+    culib::patterns::Publisher<TypeParam, double> p;
     
     TypeParam someEvent {};
     p.addEvent(someEvent);
@@ -171,11 +168,4 @@ TYPED_TEST(BasicsPatternsObserver, NiceValues_Remove) {
     auto const& observers3 {p.getObservers(someEvent)};
     ASSERT_EQ(observers3.size(), 1u);
     ASSERT_EQ(observers3[0], std::pair(niceValue, &o1));
-}
-
-//uncomment to fail
-TYPED_TEST(BasicsPatternsObserver, NoUpdateMethodImplemented_CompileTimeFailure){
-//	Observer<TypeParam, double> o;
-//	Publisher<TypeParam, double> p;
-	ASSERT_TRUE(true);
 }
