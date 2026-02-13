@@ -167,7 +167,7 @@ namespace culib::patterns {
 		requires std::same_as<typename Container::value_type, Event>
 		{
 			for (auto const& event : events) {
-				AttachImpl(observer, niceValue, events);
+				AttachImpl(observer, niceValue, event);
 			}
 		}
 
@@ -176,7 +176,7 @@ namespace culib::patterns {
 		requires std::same_as<typename Container::value_type, Event>
 		{
 			for (auto const& event : events) {
-				DetachImpl(observer, events);
+				DetachImpl(observer, event);
 			}
 		}
 
