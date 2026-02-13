@@ -149,22 +149,22 @@ namespace culib::patterns {
 		virtual ~Publisher() = default;
 
 		template<typename... Events>
-		void Attach(ObserverType *observer, int niceValue, Events const&... events) &
 		requires ::culib::requirements::AllTheSame<Event, Events...>
+		void Attach(ObserverType *observer, int niceValue, Events const&... events) &
 		{
 			(AttachImpl(observer, niceValue, events), ...);
 		}
 
 		template<typename... Events>
-		void Detach(ObserverType *observer, Events const&... events) &
 		requires ::culib::requirements::AllTheSame<Event, Events...>
+		void Detach(ObserverType *observer, Events const&... events) &
 		{
 			(DetachImpl(observer, events), ...);
 		}
 
 		template<::culib::requirements::IsContainer Container>
-		void Attach(ObserverType *observer, int niceValue, Container const& events) &
 		requires std::same_as<typename Container::value_type, Event>
+		void Attach(ObserverType *observer, int niceValue, Container const& events) &
 		{
 			for (auto const& event : events) {
 				AttachImpl(observer, niceValue, event);
@@ -172,8 +172,8 @@ namespace culib::patterns {
 		}
 
 		template<::culib::requirements::IsContainer Container>
-		void Detach(ObserverType *observer, Container const& events) &
 		requires std::same_as<typename Container::value_type, Event>
+		void Detach(ObserverType *observer, Container const& events) &
 		{
 			for (auto const& event : events) {
 				DetachImpl(observer, event);
