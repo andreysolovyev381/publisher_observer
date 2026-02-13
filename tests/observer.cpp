@@ -51,6 +51,7 @@ TYPED_TEST(BasicsPatternsObserver, EventNotAvailableAttachNotOk){
 
 	Event someEvent {};
 
+	// p.addEvent(someEvent);
 	p.Attach(&o, niceValue, someEvent);
 
 	ASSERT_FALSE(p.hasSubscription(&o, someEvent));
