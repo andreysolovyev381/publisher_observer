@@ -7,13 +7,6 @@
 #include <string>
 
 
-namespace test_global_values {
-
-	double testValue{0.0};
-
-}//!namespace test_global_values
-
-
 namespace {
 
     using event_types = testing::Types<
@@ -21,20 +14,26 @@ namespace {
 		std::string
     >;
 
+    using Value = double;
+    namespace test_global_values {
+
+	    Value testValue{0.0};
+
+    }//!namespace test_global_values
+
     template <typename Event>
-    struct InheretingObserver final : public culib::patterns::Observer<Event, double> {
+    struct InheretingObserver final : public culib::patterns::Observer<Event, Value> {
 
 	    Event testEvent;
 
-    	void updateCallback(Event const& event, double const& value) & override {
+    	void updateCallback(Event const& event, Value const& value) & override {
 	    	testEvent = event;
 		    test_global_values::testValue = value;
     	}
     };
 
     template <typename Event>
-    struct InheretingObserverFail final : public culib::patterns::Observer<Event, double>
-    {};
+    struct InheretingPublisher final : public culib::patterns::Publisher<Event, Value>{};
 
     template<typename T>
     class BasicsPatternsObserver : public testing::Test {};
@@ -46,10 +45,11 @@ namespace {
 
 
 TYPED_TEST(BasicsPatternsObserver, EventNotAvailableAttachNotOk){
-	InheretingObserver<TypeParam> o;
-	culib::patterns::Publisher<TypeParam, double> p;
+    using Event = TypeParam;
+	InheretingObserver<Event> o;
+	InheretingPublisher<Event> p;
 
-	TypeParam someEvent {};
+	Event someEvent {};
 
 	p.Attach(&o, niceValue, someEvent);
 
@@ -57,10 +57,11 @@ TYPED_TEST(BasicsPatternsObserver, EventNotAvailableAttachNotOk){
 }
 
 TYPED_TEST(BasicsPatternsObserver, EventAvailableAttachOk) {
-	InheretingObserver<TypeParam> o;
-	culib::patterns::Publisher<TypeParam, double> p;
+    using Event = TypeParam;
+	InheretingObserver<Event> o;
+	InheretingPublisher<Event> p;
 
-	TypeParam someEvent {};
+	Event someEvent {};
 	
 	p.addEvent(someEvent);
 	p.Attach(&o, niceValue, someEvent);
@@ -69,10 +70,11 @@ TYPED_TEST(BasicsPatternsObserver, EventAvailableAttachOk) {
 }
 
 TYPED_TEST(BasicsPatternsObserver, UpdateWithNewValueNotOk_NoEvent) {
-	InheretingObserver<TypeParam> o;
-	culib::patterns::Publisher<TypeParam, double> p;
+    using Event = TypeParam;
+	InheretingObserver<Event> o;
+	InheretingPublisher<Event> p;
 
-	TypeParam someEvent {};
+	Event someEvent {};
 
 	p.Attach(&o, niceValue, someEvent);
 
@@ -84,11 +86,13 @@ TYPED_TEST(BasicsPatternsObserver, UpdateWithNewValueNotOk_NoEvent) {
 }
 
 TYPED_TEST(BasicsPatternsObserver, UpdateWithNewValueOk) {
-	InheretingObserver<TypeParam> o;
-	culib::patterns::Publisher<TypeParam, double> p;
+    using Event = TypeParam;
+	InheretingObserver<Event> o;
+	InheretingPublisher<Event> p;
 
-	TypeParam someEvent {};
-	p.addEvent(someEvent);
+	Event someEvent {};
+
+    p.addEvent(someEvent);
 	p.Attach(&o, niceValue, someEvent);
 
 	ASSERT_TRUE(p.hasSubscription(&o, someEvent));
@@ -99,10 +103,12 @@ TYPED_TEST(BasicsPatternsObserver, UpdateWithNewValueOk) {
 }
 
 TYPED_TEST(BasicsPatternsObserver, UnableToAddRepetively) {
-    InheretingObserver<TypeParam> o;
-    culib::patterns::Publisher<TypeParam, double> p;
-    
-    TypeParam someEvent {};
+    using Event = TypeParam;
+	InheretingObserver<Event> o;
+	InheretingPublisher<Event> p;
+
+	Event someEvent {};
+
     p.addEvent(someEvent);
     
     p.Attach(&o, niceValue, someEvent);
@@ -125,10 +131,12 @@ TYPED_TEST(BasicsPatternsObserver, UnableToAddRepetively) {
 }
 
 TYPED_TEST(BasicsPatternsObserver, NiceValues_Add) {
-    InheretingObserver<TypeParam> o1, o2;
-    culib::patterns::Publisher<TypeParam, double> p;
-    
-    TypeParam someEvent {};
+    using Event = TypeParam;
+	InheretingObserver<Event> o1, o2;
+	InheretingPublisher<Event> p;
+
+	Event someEvent {};
+
     p.addEvent(someEvent);
     p.Attach(&o1, niceValue, someEvent);
     ASSERT_TRUE(p.hasSubscription(&o1, someEvent));
@@ -145,10 +153,12 @@ TYPED_TEST(BasicsPatternsObserver, NiceValues_Add) {
 }
 
 TYPED_TEST(BasicsPatternsObserver, NiceValues_Remove) {
-    InheretingObserver<TypeParam> o1, o2;
-    culib::patterns::Publisher<TypeParam, double> p;
-    
-    TypeParam someEvent {};
+    using Event = TypeParam;
+	InheretingObserver<Event> o1, o2;
+	InheretingPublisher<Event> p;
+
+	Event someEvent {};
+
     p.addEvent(someEvent);
     p.Attach(&o1, niceValue, someEvent);
     ASSERT_TRUE(p.hasSubscription(&o1, someEvent));
