@@ -25,7 +25,7 @@ namespace culib::requirements {
 		struct MaybeUserDefinedHash<HashableType, MaybeHash, HashResult,
 				std::void_t<
 						std::enable_if_t<std::negation_v<std::is_same<HashResult, bool>>>,
-						std::enable_if_t<std::is_invocable_r_v<std::size_t, MaybeHash, std::add_const_t<std::decay_t<HashableType>>>>,
+						std::enable_if_t<std::is_invocable_r_v<HashResult, MaybeHash, std::add_const_t<std::decay_t<HashableType>>>>,
 						std::enable_if_t<std::is_copy_constructible_v<MaybeHash>>,
 						std::enable_if_t<std::is_move_constructible_v<MaybeHash>>
 				>
