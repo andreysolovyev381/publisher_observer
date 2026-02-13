@@ -31,7 +31,7 @@ namespace culib::patterns {
 	 * Such a Queue can be turned into thread safe, although at the moment of coding this it is hardy
 	 * imaginable that such Queue can be an object of concurrent access.
 	 *
-	 * */
+	 **/
 
 	template<typename Event, typename Value>
 	struct Observer {
