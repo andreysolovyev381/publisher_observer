@@ -20,13 +20,14 @@ namespace culib::patterns {
 	/**
 	 * @dev
 	 * Gang of Four book defined Publisher Observer pattern as a lazy one,
-	 * where a Publisher just notifies an Observer, that there is a new state,
-	 * and it is up to an Observer to decide if it is willing to update itself with that
+	 * where a Publisher just notifies an Observer that there is a new state,
+	 * and it is up to Observer to decide if it is willing to update itself with that
 	 * new state of a Publisher.
 	 * However, in this case we have a situation that every Event MUST be processed
 	 * by an Observer, therefore we use push model, to assure that happens.
-	 * Indeed, Publisher can't wait until Observer finishes, so there must be a Queue to handle
-	 * incoming data.
+	 * Indeed, Publisher can't wait until Observer finishes, so there must be a Queue on 
+	 * Observer's side to handle incoming data and immediately let go Publisher after 
+	 * push update is called.
 	 * Such a Queue can be turned into thread safe, although at the moment of coding this it is hardy
 	 * imaginable that such Queue can be an object of concurrent access.
 	 *
