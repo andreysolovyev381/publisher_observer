@@ -4,17 +4,47 @@
 
 #include <gtest/gtest.h>
 
-#include "./tests_types_list.h"
+#include "../include/observer.hpp"
+
+#include <string>
 
 using namespace culib::patterns;
 
-template<typename T>
-class BasicsPatternsObserver : public testing::Test {};
-TYPED_TEST_SUITE(BasicsPatternsObserver, event_types);
+namespace test_global_values {
+
+	static inline double testValue{0.0};
+
+}//!namespace test_global_values
 
 namespace {
+
+    using event_types = testing::Types<
+		int,
+		std::string
+    >;
+
+    template <typename Event>
+    struct InheretingObserver final : public culib::patterns::Observer<Event, double> {
+
+	    Event testEvent;
+
+    	void updateCallback(Event const& event, double const& value) & override {
+	    	testEvent = event;
+		    test_global_values::testValue = value;
+    	}
+    };
+
+    template <typename Event>
+    struct InheretingObserverFail final : public culib::patterns::Observer<Event, double>
+    {};
+
+
+    template<typename T>
+    class BasicsPatternsObserver : public testing::Test {};
+    TYPED_TEST_SUITE(BasicsPatternsObserver, event_types);
+
     int const niceValue {10};
-}
+}//!namespace
 
 TYPED_TEST(BasicsPatternsObserver, EventNotAvailableAttachNotOk){
 	InheretingObserver<TypeParam> o;
