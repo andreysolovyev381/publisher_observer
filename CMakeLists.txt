@@ -55,7 +55,7 @@ function(set_architecture)
                 -mtune=generic
         )
     elseif(TSE_ARCH_ARM64)
-        message(STATUS "Project wide selection: Building for Architecture ARM64 (Apple Silicon / M1)")
+        message(STATUS "Project wide selection: Building for Architecture ARM64")
         add_compile_options(
                 -march=armv8-a
                 -mtune=native
@@ -72,18 +72,6 @@ set_architecture()
 
 # ---------------- ARCHITECTURE ENDS HERE ----------------
 
-
-
-
-
-# # ---------------- LTO FAILS ON MACOS ----------------
-# if (TSE_ARCH_X86_64)
-#     #obfuscation, works poorly for mac
-#     add_compile_options(
-#             -flto #optimization on linker stage
-#     )
-# endif ()
-# # ---------------- LTO FAILS ON MACOS ----------------
 
 
 
@@ -114,6 +102,13 @@ if(DEFINED CMAKE_BUILD_TYPE AND NOT CMAKE_BUILD_TYPE STREQUAL "")
         )
     endif()
 endif()
+
+if (TSE_ARCH_X86_64)
+    #obfuscation, works poorly for mac
+    add_compile_options(
+            -flto #optimization on linker stage
+    )
+endif ()
 
 add_compile_options(
         -Wall
