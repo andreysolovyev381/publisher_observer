@@ -12,7 +12,7 @@ using namespace culib::patterns;
 
 namespace test_global_values {
 
-	static inline double testValue{0.0};
+	double testValue{0.0};
 
 }//!namespace test_global_values
 
