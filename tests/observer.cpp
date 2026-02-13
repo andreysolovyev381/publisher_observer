@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-#include "../include/observer.hpp"
+#include "include/observer.hpp"
 
 #include <string>
 
