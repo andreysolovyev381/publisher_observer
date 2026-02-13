@@ -53,7 +53,7 @@ namespace culib::requirements {
 	template <typename HashableType, typename MaybeHash, typename HashResult = std::size_t>
 	concept IsHash = (
 			                 std::negation_v<std::is_same<HashResult, bool>> &&
-			                 std::is_invocable_r_v<std::size_t, MaybeHash, std::add_const_t<std::decay_t<HashableType>>> &&
+			                 std::is_invocable_r_v<HashResult, MaybeHash, std::add_const_t<std::decay_t<HashableType>>> &&
 			                 std::is_copy_constructible_v<MaybeHash> &&
 			                 std::is_move_constructible_v<MaybeHash>
 	                 ) ||
