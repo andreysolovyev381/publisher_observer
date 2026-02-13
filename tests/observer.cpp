@@ -6,6 +6,7 @@
 #include "include/observer.hpp"
 #include <string>
 
+
 using namespace culib::patterns;
 
 
@@ -37,7 +38,6 @@ namespace {
     template <typename Event>
     struct InheretingObserverFail final : public culib::patterns::Observer<Event, double>
     {};
-
 
     template<typename T>
     class BasicsPatternsObserver : public testing::Test {};
